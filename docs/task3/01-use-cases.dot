@@ -1,0 +1,30 @@
+graph UserGoals {
+graph [layout=neato,overlap=true,splines=line,outputorder=edgesfirst,bgcolor="white",margin=0.15];
+node [fontname="Arial",fontsize=11,pin=true,color="#263E35"];
+edge [color="#263E35",penwidth=1.1];
+title [pos="6.9444,-0.3333!",label="BookBridge user goals",shape="plaintext",fontsize="18"];
+boundary [pos="6.8750,-5.0694!",label="",shape="box",width="8.88888888888889",height="7.638888888888889",fixedsize="true",color="#81947D"];
+system_title [pos="6.8750,-1.5417!",label="BookBridge local prototype",shape="plaintext",fontsize="13"];
+customer [pos="1.0833,-4.8611!",label="<<actor>>\nCustomer",shape="box",style="rounded",width="1.4",height="0.55"];
+staff [pos="12.8472,-4.8611!",label="<<actor>>\nStaff",shape="box",style="rounded",width="1.4",height="0.55"];
+uc03 [pos="4.5833,-2.7083!",label="UC-03\nBrowse and find books",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+customer -- uc03;
+uc04 [pos="4.5833,-4.3750!",label="UC-04\nCreate a reservation",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+customer -- uc04;
+uc05 [pos="4.5833,-6.0417!",label="UC-05\nCancel an own pending\nreservation",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+customer -- uc05;
+uc07 [pos="4.5833,-7.7083!",label="UC-07\nView own reservations",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+customer -- uc07;
+uc01 [pos="9.1667,-2.4306!",label="UC-01\nMaintain the book catalogue",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+staff -- uc01;
+uc02 [pos="9.1667,-3.8194!",label="UC-02\nRecord stock receipts",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+staff -- uc02;
+uc06 [pos="9.1667,-5.2083!",label="UC-06\nConfirm collection",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+staff -- uc06;
+uc08 [pos="9.1667,-6.5972!",label="UC-08\nView and filter all\nreservations",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+staff -- uc08;
+uc09 [pos="9.1667,-7.9861!",label="UC-09\nSummarise completed\nreservations",shape="ellipse",style="filled",fillcolor="#F1F4EE",width="3.45",height="0.84",fixedsize="true"];
+staff -- uc09;
+scope [pos="6.8750,-9.4861!",label="Predefined demo identities and sample data.\nPayment and physical collection are outside software.\nNo registration, cart, delivery or legacy synchronisation.",shape="note",style="filled",fillcolor="#FAFAF7",fontsize="10"];
+footer [pos="6.8750,-10.2778!",label="AI-assisted review draft | 2026-11-02",shape="plaintext",fontsize="9",fontcolor="#697765"];
+}

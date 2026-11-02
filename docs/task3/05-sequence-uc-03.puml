@@ -1,0 +1,40 @@
+@startuml SD-03
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-03 / UC-03 - Browse and find books
+footer AI-assisted review draft | 2026-11-02
+actor Customer as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Browse with optional keyword, category and price order
+note right of system
+Trim keyword; search title OR author, then
+apply category. Return listed titles only;
+include zero-stock titles.
+end note
+alt matches exist
+system --> actor: Show matching titles, authors, prices and availability
+else no matches
+system --> actor: Show an explicit no-results message
+else read fails
+system --> actor: Show read error; do not present failure as an empty\ncatalogue
+end
+opt customer selects a title
+actor -> system: Open selected book details
+alt book exists and remains listed
+system --> actor: Show details; mark zero stock unavailable for reservation
+else missing or unlisted
+system --> actor: Show unavailable message and route back to catalogue
+end
+end
+@enduml
