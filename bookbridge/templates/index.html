@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f35">
+  <title>BookBridge — Find your next book</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="BookBridge home"><span class="brand-mark" aria-hidden="true">B<span>↗</span></span><span>BookBridge<small>GOOD BOOKS, CLOSE TO HOME</small></span></a>
+      <div class="identity-control"><label for="identity-select">Demo identity</label><select id="identity-select" aria-describedby="demo-note" disabled><option>Loading identities…</option></select></div>
+    </div>
+  </header>
+  <main id="main" class="page-shell">
+    <div class="intro">
+      <div><p class="eyebrow">YOUR NEIGHBOURHOOD BOOKSHELF</p><h1>A good read starts here.</h1><p class="intro-copy">Find a book, reserve your copies, and collect them in store.</p></div>
+      <div class="collection-note"><span aria-hidden="true">↗</span><div>Reserve online.<br>Pay and collect in store.</div></div>
+    </div>
+    <p id="demo-note" class="demo-note">Local course prototype · sample data</p>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <nav class="tabs" aria-label="BookBridge sections">
+      <button type="button" id="tab-browse" class="tab active" aria-current="page" data-view="browse">Browse books</button>
+      <button type="button" id="tab-reservations" class="tab" data-view="reservations">My reservations</button>
+      <button type="button" id="tab-staff" class="tab" data-view="staff" hidden>Catalogue &amp; summary</button>
+    </nav>
+
+    <section id="view-browse" class="view" aria-labelledby="browse-heading">
+      <div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2 id="browse-heading">Browse the shelves</h2></div><p id="book-count" class="muted"></p></div>
+      <form id="search-form" class="search-panel" role="search">
+        <div class="field search-field"><label for="search-input">Title or author</label><div class="search-input-wrap"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="What would you like to read?" maxlength="150"><button class="button primary" type="submit">Search</button></div></div>
+        <div class="field"><label for="category-filter">Category</label><select id="category-filter"><option value="">All categories</option></select></div>
+        <div class="field"><label for="sort-select">Sort by</label><select id="sort-select"><option value="title">Title A–Z</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option></select></div>
+      </form>
+      <div id="book-grid" class="book-grid" aria-live="polite"><p class="empty-state">Loading the collection…</p></div>
+    </section>
+
+    <section id="view-reservations" class="view" aria-labelledby="reservations-heading" hidden>
+      <div class="section-heading"><div><p class="eyebrow">READY FOR YOUR NEXT CHAPTER</p><h2 id="reservations-heading">My reservations</h2></div><div class="field compact"><label for="reservation-filter">Status</label><select id="reservation-filter"><option value="">All statuses</option><option>Pending collection</option><option>Completed</option><option>Cancelled</option></select></div></div>
+      <p id="reservation-help" class="section-copy">Bring your reservation reference when you collect your books. You can cancel a reservation while it is pending collection.</p>
+      <div id="reservation-list" class="reservation-list" aria-live="polite"></div>
+    </section>
+
+    <section id="view-staff" class="view" aria-labelledby="staff-heading" hidden>
+      <div class="section-heading"><div><p class="eyebrow">BOOKSTORE DESK</p><h2 id="staff-heading">Catalogue &amp; summary</h2></div><button type="button" class="button primary" id="add-book">+ Add a book</button></div>
+      <div class="summary-grid" aria-label="Completed reservation totals"><div class="metric"><span>Completed reservations</span><strong id="summary-count">—</strong></div><div class="metric"><span>Copies collected</span><strong id="summary-quantity">—</strong></div><div class="metric"><span>Completed reservation amount</span><strong id="summary-amount">—</strong></div></div>
+      <p class="summary-note">Totals cover completed BookBridge reservations only, using the saved reservation prices. They do not verify payments.</p>
+      <div class="table-container"><table><caption class="sr-only">All catalogue titles, including unlisted books</caption><thead><tr><th scope="col">Book</th><th scope="col">Category</th><th scope="col">Price</th><th scope="col">Available</th><th scope="col">Listing</th><th scope="col">Manage</th></tr></thead><tbody id="catalogue-body"></tbody></table></div>
+    </section>
+    <footer class="page-footer"><span>BookBridge <span aria-hidden="true">·</span> D2-Team7</span><span>One book. A new beginning.</span></footer>
+  </main>
+
+  <dialog id="book-dialog" aria-labelledby="book-dialog-title">
+    <div class="dialog-header"><p class="eyebrow">BOOK DETAILS</p><button type="button" class="icon-button" data-close="book-dialog" aria-label="Close book details">×</button></div>
+    <div id="book-dialog-content"></div>
+    <form id="reserve-form" class="dialog-form">
+      <label for="reserve-quantity">Copies to reserve</label><div class="quantity-row"><input id="reserve-quantity" name="quantity" type="number" min="1" step="1" value="1" required><p id="reserve-total" class="muted"></p></div>
+      <p class="small-note">Your price is saved when you reserve. Payment happens in store.</p>
+      <div id="reserve-error" class="form-error" role="alert" hidden></div>
+      <button id="reserve-submit" class="button primary full-width" type="submit">Reserve for collection</button>
+    </form>
+    <p id="reserve-unavailable" class="dialog-info" hidden></p>
+  </dialog>
+
+  <dialog id="edit-dialog" aria-labelledby="edit-heading">
+    <div class="dialog-header"><h2 id="edit-heading">Add a book</h2><button type="button" class="icon-button" data-close="edit-dialog" aria-label="Close book form">×</button></div>
+    <form id="book-form" class="dialog-form">
+      <div class="field"><label for="edit-title">Title</label><input id="edit-title" name="title" maxlength="200" required></div>
+      <div class="field"><label for="edit-author">Author</label><input id="edit-author" name="author" maxlength="150" required></div>
+      <div class="field"><label for="edit-category">Category</label><input id="edit-category" name="category" maxlength="80" required></div>
+      <div class="form-columns"><div class="field"><label for="edit-price">Unit price (units)</label><input id="edit-price" name="price" type="number" min="0" step="0.01" required></div><div class="field" id="initial-stock-field"><label for="edit-stock">Initial available copies</label><input id="edit-stock" name="stock" type="number" min="0" step="1" value="0" required></div></div>
+      <label class="checkbox-label"><input id="edit-listed" name="listed" type="checkbox" checked> Listed for customers</label>
+      <p id="edit-stock-note" class="small-note" hidden>Use “Receive stock” to add copies. Unlisting preserves existing reservations.</p>
+      <div id="book-form-error" class="form-error" role="alert" hidden></div>
+      <button class="button primary full-width" id="book-save" type="submit">Save book</button>
+    </form>
+  </dialog>
+
+  <dialog id="receipt-dialog" aria-labelledby="receipt-heading">
+    <div class="dialog-header"><h2 id="receipt-heading">Receive stock</h2><button type="button" class="icon-button" data-close="receipt-dialog" aria-label="Close stock form">×</button></div>
+    <p id="receipt-title" class="receipt-title"></p>
+    <form id="receipt-form" class="dialog-form"><div class="field"><label for="receipt-quantity">Copies received</label><input id="receipt-quantity" type="number" min="1" step="1" required value="1"></div><p id="receipt-current" class="small-note"></p><div id="receipt-error" class="form-error" role="alert" hidden></div><button id="receipt-save" class="button primary full-width" type="submit">Add copies to stock</button></form>
+  </dialog>
+  <dialog id="confirmation-dialog" aria-labelledby="confirmation-heading" aria-describedby="confirmation-message">
+    <div class="dialog-header"><h2 id="confirmation-heading">Confirm action</h2><button type="button" class="icon-button" data-close="confirmation-dialog" aria-label="Keep reservation unchanged and close">×</button></div>
+    <p id="confirmation-message" class="confirmation-message"></p>
+    <form method="dialog" class="confirmation-actions">
+      <button type="submit" class="button outline" value="keep" autofocus>Keep unchanged</button>
+      <button type="submit" class="button primary" id="confirmation-submit" value="confirm">Confirm</button>
+    </form>
+  </dialog>
+  <noscript><p class="notice error">BookBridge needs JavaScript enabled to browse books and manage reservations.</p></noscript>
+</body>
+</html>
