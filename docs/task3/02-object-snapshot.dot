@@ -1,0 +1,25 @@
+graph ObjectSnapshot {
+graph [rankdir=LR, bgcolor="white", fontname="Arial", fontsize=18, label="OD-01 - Illustrative BookBridge object snapshot\nAI-assisted review draft | 2026-11-02", labelloc=t, pad=0.2, ranksep=0.65, nodesep=0.3];
+node [shape=plain, fontname="Arial", fontsize=11];
+edge [fontname="Arial", fontsize=10, color="#263E35"];
+cA [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>customerA : TestIdentity</U></TD></TR><HR/><TR><TD ALIGN="LEFT">identityId = &quot;C-A&quot;</TD></TR><TR><TD ALIGN="LEFT">displayLabel = &quot;Customer A&quot;</TD></TR><TR><TD ALIGN="LEFT">role = &quot;customer&quot;</TD></TR></TABLE>>];
+cB [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>customerB : TestIdentity</U></TD></TR><HR/><TR><TD ALIGN="LEFT">identityId = &quot;C-B&quot;</TD></TR><TR><TD ALIGN="LEFT">displayLabel = &quot;Customer B&quot;</TD></TR><TR><TD ALIGN="LEFT">role = &quot;customer&quot;</TD></TR></TABLE>>];
+staffA [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>staffA : TestIdentity</U></TD></TR><HR/><TR><TD ALIGN="LEFT">identityId = &quot;S-A&quot;</TD></TR><TR><TD ALIGN="LEFT">displayLabel = &quot;Staff A&quot;</TD></TR><TR><TD ALIGN="LEFT">role = &quot;staff&quot;</TD></TR></TABLE>>];
+bA [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>bookA : Book</U></TD></TR><HR/><TR><TD ALIGN="LEFT">bookId = &quot;B-01&quot;</TD></TR><TR><TD ALIGN="LEFT">title = &quot;Harbour Stories&quot;</TD></TR><TR><TD ALIGN="LEFT">author = &quot;Sample Author A&quot;</TD></TR><TR><TD ALIGN="LEFT">category = &quot;Fiction&quot;</TD></TR><TR><TD ALIGN="LEFT">currentUnitPrice = 50.00</TD></TR><TR><TD ALIGN="LEFT">availableQuantity = 3</TD></TR><TR><TD ALIGN="LEFT">listed = true</TD></TR></TABLE>>];
+bB [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>bookB : Book</U></TD></TR><HR/><TR><TD ALIGN="LEFT">bookId = &quot;B-02&quot;</TD></TR><TR><TD ALIGN="LEFT">title = &quot;City Walks&quot;</TD></TR><TR><TD ALIGN="LEFT">author = &quot;Sample Author B&quot;</TD></TR><TR><TD ALIGN="LEFT">category = &quot;Travel&quot;</TD></TR><TR><TD ALIGN="LEFT">currentUnitPrice = 20.00</TD></TR><TR><TD ALIGN="LEFT">availableQuantity = 4</TD></TR><TR><TD ALIGN="LEFT">listed = false</TD></TR></TABLE>>];
+r1 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>reservation1 : Reservation</U></TD></TR><HR/><TR><TD ALIGN="LEFT">reference = &quot;R-01&quot;</TD></TR><TR><TD ALIGN="LEFT">quantity = 2</TD></TR><TR><TD ALIGN="LEFT">savedUnitPrice = 30.00</TD></TR><TR><TD ALIGN="LEFT">/amount = 60.00</TD></TR><TR><TD ALIGN="LEFT">status = &quot;Pending collection&quot;</TD></TR></TABLE>>];
+r2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>reservation2 : Reservation</U></TD></TR><HR/><TR><TD ALIGN="LEFT">reference = &quot;R-02&quot;</TD></TR><TR><TD ALIGN="LEFT">quantity = 1</TD></TR><TR><TD ALIGN="LEFT">savedUnitPrice = 20.00</TD></TR><TR><TD ALIGN="LEFT">/amount = 20.00</TD></TR><TR><TD ALIGN="LEFT">status = &quot;Completed&quot;</TD></TR></TABLE>>];
+r3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#263E35"><TR><TD BGCOLOR="#E5EEE0"><U>reservation3 : Reservation</U></TD></TR><HR/><TR><TD ALIGN="LEFT">reference = &quot;R-03&quot;</TD></TR><TR><TD ALIGN="LEFT">quantity = 1</TD></TR><TR><TD ALIGN="LEFT">savedUnitPrice = 30.00</TD></TR><TR><TD ALIGN="LEFT">/amount = 30.00</TD></TR><TR><TD ALIGN="LEFT">status = &quot;Cancelled&quot;</TD></TR></TABLE>>];
+{rank=same;cA;cB;staffA;}
+{rank=same;r1;r3;r2;}
+{rank=same;bA;bB;}
+cA -- r1 [label="owner"];
+cA -- r3 [label="owner"];
+cB -- r2 [label="owner"];
+r1 -- bA [label="reserved title"];
+r3 -- bA [label="reserved title"];
+r2 -- bB [label="reserved title"];
+note [shape=note, style=filled, fillcolor="#FAFAF7", label="Illustrative values, not observed test results.\nEach reservation has one owner and one title.\n/amount = quantity x savedUnitPrice (derived).\nOnly R-02 contributes: 1 copy and 20.00 units.\nUnlisting preserves existing links and records.\nStaff is a demo role, not a reservation owner."];
+staffA -- note [style=invis];
+r2 -- note [style=invis];
+}

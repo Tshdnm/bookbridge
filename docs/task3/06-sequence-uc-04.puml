@@ -1,0 +1,47 @@
+@startuml SD-04
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-04 / UC-04 - Create a reservation
+footer AI-assisted review draft | 2026-11-02
+actor Customer as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Open reservation form for one selected title
+system --> actor: Show current price, availability and quantity field
+actor -> system: Submit requested quantity in the current customer context
+note right of system
+Prevent repeat submission while processing.
+Recheck current listing, price and stock at
+submission.
+end note
+alt missing customer, invalid quantity or unavailable title
+system --> actor: Show reason; keep editable input; no reservation or stock\nchange
+else valid customer, listed book and sufficient stock
+note right of system
+One title; positive integer q. Save unique
+reference, owner, q, current price p and
+Pending collection. Save stock minus q
+together.
+end note
+alt both changes saved
+system --> actor: Show reference, title, q, saved p, amount q x p and\nPending collection
+else save fails
+system --> actor: Show error; neither reservation nor stock is changed
+end
+end
+note right of system
+Refreshing a successful result or repeating
+the same submission must not create an
+additional reservation.
+end note
+@enduml

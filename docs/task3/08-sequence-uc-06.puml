@@ -1,0 +1,45 @@
+@startuml SD-06
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-06 / UC-06 - Confirm collection
+footer AI-assisted review draft | 2026-11-02
+actor Staff as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Request collection details using a reservation reference
+alt non-staff identity or unknown reference
+system --> actor: Reject access or report not found; no changes
+else authorised staff and existing reservation
+system --> actor: Show owner, title, quantity, saved price, amount and\nstatus
+actor -> system: Check reference, owner, title and quantity; confirm\ncollection
+alt current status is Completed or Cancelled
+system --> actor: Reject terminal-state action; no stock, status or total\nchange
+else current status is Pending collection
+note right of system
+Set Completed. Keep quantity and saved price.
+Do not deduct stock again; unlisting does not
+block existing collection.
+end note
+alt save succeeds
+system --> actor: Show Completed confirmation; record is eligible for\ncompleted totals
+else save fails
+system --> actor: Show error; status remains unchanged
+end
+end
+end
+note right of system
+Payment and physical collection happen
+outside BookBridge. This operation records
+collection, not payment authorisation.
+end note
+@enduml

@@ -1,0 +1,41 @@
+@startuml SD-08
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-08 / UC-08 - View and filter all reservations
+footer AI-assisted review draft | 2026-11-02
+actor Staff as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Request all reservations, a status filter or one reference
+alt non-staff identity or unsupported status
+system --> actor: Reject request with a clear reason
+else staff and supported filter
+note right of system
+All includes all three statuses. A specific
+filter returns only that status. Read stored
+reservation amounts.
+end note
+alt matching records found
+system --> actor: Show reference, customer, title, quantity, saved amount\nand status
+else matching list empty
+system --> actor: Show explicit empty-results message
+else selected reference missing or read fails
+system --> actor: Show not-found or read error
+end
+end
+note right of system
+Read-only goal. Offer UC-06 only for eligible
+pending records; no staff cancellation,
+arbitrary edits or date-range analytics.
+end note
+@enduml

@@ -8,3 +8,4 @@ instance/
 .env.*
 .pytest_cache/
 test-results/
+docs/task3/previews/

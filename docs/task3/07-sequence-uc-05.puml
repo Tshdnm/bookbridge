@@ -1,0 +1,41 @@
+@startuml SD-05
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-05 / UC-05 - Cancel an own pending reservation
+footer AI-assisted review draft | 2026-11-02
+actor Customer as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Request cancellation using a reservation reference
+note right of system
+Check current customer ownership before
+returning any details. Read the current
+reservation status.
+end note
+alt missing identity, unknown or foreign-owned record
+system --> actor: Reject without disclosing foreign details; no changes
+else Completed or Cancelled record, including repeated cancellation
+system --> actor: Reject non-pending action; stock and status unchanged
+else own Pending collection record
+note right of system
+Set Cancelled and add the stored reserved
+quantity back exactly once, as one consistent
+save. Listing state is not a precondition.
+end note
+alt save succeeds
+system --> actor: Show cancellation confirmation and retained Cancelled\nrecord
+else save fails
+system --> actor: Show error; neither status nor stock changes
+end
+end
+@enduml

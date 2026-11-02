@@ -1,0 +1,34 @@
+@startuml SD-02
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-02 / UC-02 - Record stock receipts
+footer AI-assisted review draft | 2026-11-02
+actor Staff as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Select a book and submit received quantity
+alt non-staff, unknown book or invalid quantity
+system --> actor: Reject with specific reason; stock unchanged
+else staff, existing book and positive integer quantity
+note right of system
+newAvailable = storedAvailable +
+receivedQuantity. A single confirmed receipt
+adds once; reservations are not changed.
+end note
+alt save succeeds
+system --> actor: Show stored new available quantity and success
+else save fails
+system --> actor: Show error; no partial stock addition
+end
+end
+@enduml

@@ -1,0 +1,42 @@
+@startuml SD-09
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-09 / UC-09 - Summarise completed reservations
+footer AI-assisted review draft | 2026-11-02
+actor Staff as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Request completed-reservation summary
+alt missing or non-staff identity
+system --> actor: Reject access; no changes
+else staff identity
+note right of system
+Select Completed only. completedCopies =
+sum(quantity); completedAmount = sum(quantity
+x savedUnitPrice).
+end note
+alt completed records exist
+system --> actor: Show completed copies and amount to two decimal places
+else no completed records
+system --> actor: Show completed copies 0 and amount 0.00
+else records cannot be read
+system --> actor: Show error; do not show misleading zero or partial totals
+end
+end
+note right of system
+Exclude Pending collection and Cancelled. Use
+saved prices, not catalogue prices. Totals
+cover BookBridge records, not verified
+payment revenue.
+end note
+@enduml

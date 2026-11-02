@@ -10,7 +10,7 @@ Task1 and Task2 reports have been submitted. Task3 analysis models and this AI-a
 
 - [Requirements baseline](docs/requirements-baseline.md)
 - [This week's plan and functional ownership](docs/week-2026-11-02.md)
-- Task3 model pack and traceability: being prepared for this stage.
+- [Task3 model pack and traceability](docs/task3/README.md)
 - [Actual review evidence and remaining checks](docs/development-status.md)
 
 Task3 is due on **12 November 2026 at 23:59**. **5 December 2026** is the team's internal project readiness target; the official final-project date remains to be confirmed. Optional online hosting is a later experiment.

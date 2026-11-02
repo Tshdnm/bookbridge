@@ -1,0 +1,215 @@
+{
+  "status": "AI-assisted review draft",
+  "date": "2026-11-02",
+  "diagram_count": 12,
+  "cross_cutting_acceptance": [
+    "AT-09"
+  ],
+  "models": [
+    {
+      "id": "UC-OVERVIEW",
+      "title": "BookBridge user goals",
+      "purpose": "Functional model and system boundary",
+      "fr": [
+        "FR-01",
+        "FR-02",
+        "FR-03",
+        "FR-04",
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "FR-08",
+        "FR-09"
+      ],
+      "source": "01-use-cases.puml",
+      "dot": "01-use-cases.dot",
+      "svg": "01-use-cases.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "OD-01",
+      "title": "Illustrative BookBridge object snapshot",
+      "purpose": "Static model with instances, slots and links",
+      "fr": [
+        "FR-01",
+        "FR-02",
+        "FR-03",
+        "FR-04",
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "FR-08",
+        "FR-09"
+      ],
+      "source": "02-object-snapshot.puml",
+      "dot": "02-object-snapshot.dot",
+      "svg": "02-object-snapshot.svg",
+      "engine": "dot"
+    },
+    {
+      "id": "SD-01",
+      "title": "Maintain the book catalogue",
+      "purpose": "Dynamic model for UC-01",
+      "uc": "UC-01",
+      "fr": [
+        "FR-01"
+      ],
+      "acceptance": [
+        "AT-01",
+        "AT-06"
+      ],
+      "source": "03-sequence-uc-01.puml",
+      "dot": "03-sequence-uc-01.dot",
+      "svg": "03-sequence-uc-01.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-02",
+      "title": "Record stock receipts",
+      "purpose": "Dynamic model for UC-02",
+      "uc": "UC-02",
+      "fr": [
+        "FR-02"
+      ],
+      "acceptance": [
+        "AT-01"
+      ],
+      "source": "04-sequence-uc-02.puml",
+      "dot": "04-sequence-uc-02.dot",
+      "svg": "04-sequence-uc-02.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-03",
+      "title": "Browse and find books",
+      "purpose": "Dynamic model for UC-03",
+      "uc": "UC-03",
+      "fr": [
+        "FR-03"
+      ],
+      "acceptance": [
+        "AT-01",
+        "AT-03"
+      ],
+      "source": "05-sequence-uc-03.puml",
+      "dot": "05-sequence-uc-03.dot",
+      "svg": "05-sequence-uc-03.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-04",
+      "title": "Create a reservation",
+      "purpose": "Dynamic model for UC-04",
+      "uc": "UC-04",
+      "fr": [
+        "FR-04"
+      ],
+      "acceptance": [
+        "AT-02",
+        "AT-03",
+        "AT-05"
+      ],
+      "source": "06-sequence-uc-04.puml",
+      "dot": "06-sequence-uc-04.dot",
+      "svg": "06-sequence-uc-04.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-05",
+      "title": "Cancel an own pending reservation",
+      "purpose": "Dynamic model for UC-05",
+      "uc": "UC-05",
+      "fr": [
+        "FR-05"
+      ],
+      "acceptance": [
+        "AT-04",
+        "AT-06"
+      ],
+      "source": "07-sequence-uc-05.puml",
+      "dot": "07-sequence-uc-05.dot",
+      "svg": "07-sequence-uc-05.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-06",
+      "title": "Confirm collection",
+      "purpose": "Dynamic model for UC-06",
+      "uc": "UC-06",
+      "fr": [
+        "FR-06"
+      ],
+      "acceptance": [
+        "AT-05",
+        "AT-06"
+      ],
+      "source": "08-sequence-uc-06.puml",
+      "dot": "08-sequence-uc-06.dot",
+      "svg": "08-sequence-uc-06.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-07",
+      "title": "View own reservations",
+      "purpose": "Dynamic model for UC-07",
+      "uc": "UC-07",
+      "fr": [
+        "FR-07"
+      ],
+      "acceptance": [
+        "AT-07"
+      ],
+      "source": "09-sequence-uc-07.puml",
+      "dot": "09-sequence-uc-07.dot",
+      "svg": "09-sequence-uc-07.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-08",
+      "title": "View and filter all reservations",
+      "purpose": "Dynamic model for UC-08",
+      "uc": "UC-08",
+      "fr": [
+        "FR-08"
+      ],
+      "acceptance": [
+        "AT-07"
+      ],
+      "source": "10-sequence-uc-08.puml",
+      "dot": "10-sequence-uc-08.dot",
+      "svg": "10-sequence-uc-08.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "SD-09",
+      "title": "Summarise completed reservations",
+      "purpose": "Dynamic model for UC-09",
+      "uc": "UC-09",
+      "fr": [
+        "FR-09"
+      ],
+      "acceptance": [
+        "AT-05",
+        "AT-08"
+      ],
+      "source": "11-sequence-uc-09.puml",
+      "dot": "11-sequence-uc-09.dot",
+      "svg": "11-sequence-uc-09.svg",
+      "engine": "neato"
+    },
+    {
+      "id": "ST-01",
+      "title": "Reservation lifecycle",
+      "purpose": "Supplementary behavioural model",
+      "fr": [
+        "FR-04",
+        "FR-05",
+        "FR-06"
+      ],
+      "source": "12-reservation-state.puml",
+      "dot": "12-reservation-state.dot",
+      "svg": "12-reservation-state.svg",
+      "engine": "dot"
+    }
+  ]
+}
