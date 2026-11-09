@@ -1,0 +1,46 @@
+@startuml SD_03
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-03 Browse and find books
+actor "Customer" as a
+participant "ui :\nBookView" as v <<boundary>>
+participant "flow :\nSearchControl" as f <<control>>
+participant "books :\nBookCatalogue" as b <<entity>>
+autonumber
+a -> v: browse / search
+v -> f: criteria
+f -> b: findListed
+b --> f: matches / error
+alt read succeeded
+f --> v: list or empty
+else read failed
+f --> v: read error
+end
+v --> a: show list/error
+opt customer opens a title
+a -> v: select book
+v -> f: book id
+f -> b: readListed
+b --> f: book / error
+alt exists and listed
+f --> v: book details
+else missing, unlisted or read failed
+f --> v: unavailable/error
+end
+end
+v --> a: show result
+note over a,b
+Trim keyword; match title OR author, then category; use the chosen price order.
+Listed zero-stock titles stay visible but unavailable. Discovery changes no data.
+end note
+@enduml

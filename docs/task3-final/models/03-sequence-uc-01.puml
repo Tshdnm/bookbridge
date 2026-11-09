@@ -1,0 +1,52 @@
+@startuml SD_01
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-01 Maintain the book catalogue
+actor "Staff" as a
+participant "ui :\nBookView" as v <<boundary>>
+participant "flow :\nBookControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "books :\nBookCatalogue" as b <<entity>>
+autonumber
+a -> v: submit change
+v -> f: book data
+f -> u: checkRole
+u --> f: staff / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> b: validate(change)
+b --> f: valid / reason
+break invalid text, price, stock or identifier
+f --> v: input error
+v --> a: show error
+end
+alt create new title
+f -> b: createBook
+b --> f: new id / error
+else edit or list/unlist
+f -> b: updateBook
+b --> f: record / error
+end
+alt save succeeded
+f --> v: saved details
+else save failed; no stored change
+f --> v: save error
+end
+v --> a: show result
+note over a,b
+Create: unique id and initial stock >= 0. Price >= 0 with at most two decimals.
+Edits preserve stock and saved prices. Unlisting retains books and reservations.
+end note
+@enduml

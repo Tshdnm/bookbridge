@@ -1,0 +1,47 @@
+@startuml SD_02
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-02 Record stock receipts
+actor "Staff" as a
+participant "ui :\nBookView" as v <<boundary>>
+participant "flow :\nBookControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "book : Book" as b <<entity>>
+autonumber
+a -> v: enter receipt
+v -> f: book id, q
+f -> u: checkRole
+u --> f: staff / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> b: read quantity
+b --> f: n / error
+break unknown book, read error or q not positive integer
+f --> v: input error
+v --> a: show error
+end
+f -> b: addOnce(q)
+b --> f: n+q / error
+alt save succeeded
+f --> v: new quantity
+else save failed; no stored change
+f --> v: save error
+end
+v --> a: show result
+note over a,b
+q is the received quantity. A successful receipt adds q exactly once.
+No reservation changes. A failed save preserves n; listing is not required.
+end note
+@enduml

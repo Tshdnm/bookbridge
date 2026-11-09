@@ -1,0 +1,52 @@
+@startuml SD_04
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-04 Create a reservation
+actor "Customer" as a
+participant "ui :\nReserveView" as v <<boundary>>
+participant "flow :\nReserveControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "book : Book" as b <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+autonumber
+a -> v: submit q
+v -> f: book id, q
+f -> u: checkRole
+u --> f: customer / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> b: check(q)
+b --> f: data / error
+break read failed, q invalid, unavailable or n < q
+f --> v: input/stock error
+v --> a: show error
+end
+critical one atomic change
+f -> r: create pending
+r --> f: ref / error
+f -> b: reserve(q)
+b --> f: n-q / error
+end
+alt both changes saved
+f --> v: saved reservation
+else save failed; neither change retained
+f --> v: save error
+end
+v --> a: show result
+note over a,r
+Recheck listing, price p and stock n at submission. Save owner, title, q and p.
+Amount = q x p. Repeated submission/refresh cannot create a second reservation.
+end note
+@enduml

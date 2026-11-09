@@ -1,0 +1,57 @@
+@startuml SD_06
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-06 Confirm collection
+actor "Staff" as a
+participant "ui :\nReserveView" as v <<boundary>>
+participant "flow :\nReserveControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+autonumber
+a -> v: open(ref)
+v -> f: reference
+f -> u: checkRole
+u --> f: staff / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> r: find(ref)
+r --> f: details / error
+break unknown reference or read failure
+f --> v: not found/error
+v --> a: show error
+end
+f --> v: collection details
+v --> a: show details
+a -> v: check; confirm
+v -> f: confirm(ref)
+f -> r: recheck status
+r --> f: status / error
+break read failed or Completed/Cancelled
+f --> v: error; no change
+v --> a: show error
+end
+f -> r: set Completed
+r --> f: saved / error
+alt save succeeded
+f --> v: Completed
+else save failed; no stored change
+f --> v: status unchanged
+end
+v --> a: show result
+note over a,r
+Staff check reference, owner, title and quantity before confirmation.
+Keep saved price and quantity; no second stock deduction. Physical collection/payment are offline.
+end note
+@enduml

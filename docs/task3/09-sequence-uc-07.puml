@@ -1,0 +1,41 @@
+@startuml SD-07
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-07 / UC-07 - View own reservations
+footer AI-assisted review draft | 2026-11-02
+actor Customer as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Request own reservation list or selected reference
+alt no customer identity or selected record belongs to another customer
+system --> actor: Reject without revealing another customer's record
+else current customer identity
+note right of system
+Filter by current owner before returning
+lists or details. Use saved quantities,
+prices, amounts and statuses.
+end note
+alt owned records found
+system --> actor: Show own records; expose cancellation only for Pending\ncollection
+else owned list empty
+system --> actor: Show no-reservations message
+else selected reference missing or read fails
+system --> actor: Show not-found or read error; no data changes
+end
+end
+note right of system
+Read-only goal. Selecting cancellation starts
+UC-05; opening or refreshing the list does
+not cancel anything.
+end note
+@enduml

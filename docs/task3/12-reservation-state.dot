@@ -1,0 +1,20 @@
+digraph ReservationLifecycle {
+  graph [rankdir=TB, bgcolor="white", fontname="Arial", label="ST-01 - Reservation lifecycle\nAI-assisted review draft | 2026-11-02", labelloc=t, fontsize=18, pad=0.3, nodesep=0.65, ranksep=0.75];
+  node [shape=box, style="rounded,filled", fillcolor="#F1F4EE", color="#263E35", fontname="Arial", fontsize=12, margin="0.16,0.12"];
+  edge [fontname="Arial", fontsize=10, color="#263E35", arrowsize=0.75];
+  initial [shape=circle, label="", width=0.16, height=0.16, style=filled, fillcolor="#263E35"];
+  pending [label="Pending collection"];
+  completed [label="Completed\n<<terminal; retained>>\n________________________\ncancel or confirm again:\nreject; no change"];
+  cancelled [label="Cancelled\n<<terminal; retained>>\n________________________\ncancel or confirm again:\nreject; no change"];
+  initial -> pending [label="create reservation\n[customer; listed title; positive integer q; enough stock]\n/ save owner, title, q, current price; stock -= q"];
+  pending -> cancelled [label="cancel [owning customer]\n/ set Cancelled; restore stored q once"];
+  pending -> completed [label="confirm collection [staff checked details]\n/ set Completed; stock unchanged"];
+  {rank=same; completed; cancelled;}
+  atomic [shape=note, style=filled, fillcolor="#FAFAF7", label="Creation and cancellation save state and stock\ntogether or leave both unchanged.\nFailed creation leaves no reservation object."];
+  unlisted [shape=note, style=filled, fillcolor="#FAFAF7", label="Unlisting blocks new reservations.\nExisting pending records remain cancellable\nby their owner and collectable by staff."];
+  invariants [shape=note, style=filled, fillcolor="#FAFAF7", label="Saved quantity and price remain unchanged.\nOnly Completed records enter completed totals.\nUnauthorised actions do not change data.\nNo expiry, refund, extension or reversal."];
+  atomic -> pending [style=dashed,arrowhead=none];
+  pending -> unlisted [style=dashed,arrowhead=none];
+  completed -> invariants [style=dashed,arrowhead=none];
+  cancelled -> invariants [style=dashed,arrowhead=none];
+}

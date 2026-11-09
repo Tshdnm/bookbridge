@@ -1,0 +1,50 @@
+@startuml SD-01
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #263E35
+skinparam LineColor #263E35
+skinparam NoteBackgroundColor #F1F4EE
+skinparam NoteBorderColor #81947D
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+skinparam sequenceMessageAlign center
+
+title SD-01 / UC-01 - Maintain the book catalogue
+footer AI-assisted review draft | 2026-11-02
+actor Staff as actor
+participant "BookBridge" as system
+autonumber
+actor -> system: Submit create, edit or listing change with book data
+alt missing or non-staff identity
+system --> actor: Reject access; no stored change
+else staff identity
+note right of system
+Validate required text, non-negative price
+with at most two decimals, and book
+identifier when editing.
+end note
+alt invalid data or unknown book
+system --> actor: Show specific error; preserve editable input; no change
+else valid data
+alt create
+note right of system
+Assign a unique book identifier. Initial
+quantity is a non-negative integer.
+end note
+else edit or list/unlist
+note right of system
+Update basic details/listing only. Preserve
+available stock and all existing reservation
+prices and records.
+end note
+end
+alt save succeeds
+system --> actor: Show saved book, updated catalogue and success
+else save fails
+system --> actor: Show save error; no partial stored change
+end
+end
+end
+@enduml
