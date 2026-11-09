@@ -1,0 +1,42 @@
+@startuml SD_09
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-09 Summarise completed reservations
+actor "Staff" as a
+participant "ui :\nQueryView" as v <<boundary>>
+participant "flow :\nQueryControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+autonumber
+a -> v: open summary
+v -> f: request totals
+f -> u: checkRole
+u --> f: staff / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> r: read Completed
+r --> f: records / error
+alt read succeeded
+f -> f: sum q and q*p
+f --> v: copies, amount
+else read failed
+f --> v: read error
+end
+v --> a: show result
+note over a,r
+Use saved p; exclude Pending collection and Cancelled. An empty set gives 0 and 0.00.
+Totals cover BookBridge records, not verified payment revenue. No reporting-period filter.
+end note
+@enduml

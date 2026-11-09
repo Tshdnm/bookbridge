@@ -1,5 +1,7 @@
 # BookBridge requirements analysis models
 
+> Historical draft, 2 November. The [refined Task3 model pack](../task3-final/README.md) contains the object-interaction sequence editions used in the final report. Submission was confirmed by the team leader on 9 November; the actual submission date remains to be supplied. The dated draft below is retained unchanged.
+
 **AI-assisted review draft — 2026-11-02.** This package prepares the models for Task3, Option 2 (Object-Oriented Requirements Analysis). It needs team review and incorporation into the final report. It does not assert that any member authored, reviewed or submitted this package, or that the acceptance scenarios have passed.
 
 ## Basis and scope

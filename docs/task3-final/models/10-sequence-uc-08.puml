@@ -1,0 +1,47 @@
+@startuml SD_08
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-08 View and filter all reservations
+actor "Staff" as a
+participant "ui :\nQueryView" as v <<boundary>>
+participant "flow :\nQueryControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+autonumber
+a -> v: list / details
+v -> f: filter, ref
+f -> u: checkRole
+u --> f: staff / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+break unsupported status
+f --> v: filter error
+v --> a: show error
+end
+f -> r: findByStatus
+r --> f: rows / reason
+alt matching records
+f --> v: saved records
+else matching list empty
+f --> v: empty message
+else missing ref or read failure
+f --> v: not found/error
+end
+v --> a: show result
+note over a,r
+Filters: All, Pending collection, Completed, Cancelled. All includes every status.
+Read-only; pending records may offer UC-06. No staff cancellation or arbitrary edits.
+end note
+@enduml

@@ -1,0 +1,52 @@
+@startuml SD_05
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-05 Cancel an own pending reservation
+actor "Customer" as a
+participant "ui :\nReserveView" as v <<boundary>>
+participant "flow :\nReserveControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+participant "book : Book" as b <<entity>>
+autonumber
+a -> v: cancel(ref)
+v -> f: reference
+f -> u: checkRole
+u --> f: customer / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> r: findOwned(ref)
+r --> f: record / error
+break missing, foreign, non-Pending or read failure
+f --> v: refusal; no change
+v --> a: show error
+end
+critical one atomic change
+f -> r: set Cancelled
+r --> f: stored q, book
+f -> b: restoreOnce(q)
+b --> f: new n / error
+end
+alt both changes saved
+f --> v: Cancelled record
+else save failed; neither change retained
+f --> v: save error
+end
+v --> a: show result
+note over a,b
+Ownership is checked before any details are returned. Use the stored quantity q.
+Repeat/terminal actions are refused. Unlisting does not block an eligible cancellation.
+end note
+@enduml

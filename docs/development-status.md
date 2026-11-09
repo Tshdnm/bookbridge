@@ -1,5 +1,34 @@
 # Development status
 
+## Update recorded on 9 November 2026
+
+This section supplements the 2 November record. Earlier observations retain their original date and scope.
+
+### Requirements analysis and first presentation
+
+The Task3 report was finalised and visually checked on 7–8 November. The 35-page English report contains one use-case diagram, one object snapshot, nine object interaction sequence diagrams and one reservation state diagram. The final PDF and editable Word file are available. On 9 November, the team leader confirmed that the final PDF had been submitted to Moodle. The actual submission date is still to be supplied. The date of this confirmation must not be used as the submission date.
+
+On 9 November, materials were prepared for the first presentation on 12 November: 16 English slides, four Chinese scripts and a rehearsal/Q&A guide. The speaking plan assigns F1 slides 1–5, F2 slides 6–8, F3 slides 9–12 and F4 slides 13–16. It targets 14 minutes plus a one-minute buffer. The slides and script pages were visually checked. Full-group rehearsal and presentation delivery remain planned actions; preparation of common materials does not establish individual completed contributions.
+
+### Focused browser evidence on 9 November
+
+Screenshots were captured from the existing local prototype using a separate sample database, leaving the original application source and existing demonstration data unchanged. The observed paths were:
+
+1. Search with keyword `e`, Technology category and ascending price order.
+2. As Demo customer A, reserve two copies of *The Quiet Bookshop* at 30.00 units each. The saved amount is 60.00 and available stock changes from 5 to 3.
+3. As Demo staff, confirm collection. Stock remains 3. The completed summary shows one reservation, two copies and 60.00 units.
+4. Open the stock-receipt dialog as a preview, without submitting a receipt.
+
+This is a focused browser walkthrough, not complete manual acceptance, a browser timing result, or evidence that an assigned member performed an independent review. No new feature implementation is claimed for this session. The ten-test automated result remains dated 2 November.
+
+### Next checks
+
+Add the actual Task3 submission date when supplied and retain the Moodle confirmation. Rehearse together by 11 November and deliver the first presentation on 12 November. Record the actual feedback afterward. During 13–15 November, each owner performs the assigned module review and acceptance checks, with F2 leading AT-09 browser timing and F4 assisting persistence verification. See `docs/week-2026-11-09.md` for responsibilities and evidence requirements.
+
+The verified GitHub destination is `Tshdnm/bookbridge`, branch `stage-2026-11-02`, with draft pull request #1. Repository publication and Feishu changes should be recorded as completed only after the new saved results are verified. The course-organisation repository has not yet been confirmed as synchronised. No deployment or production integration is claimed.
+
+---
+
 Recorded on 2 November 2026.
 
 The team reported that Task1 and Task2 had been submitted and that no program code had been written before this development session. Task3 had not been written. Existing main contained only the original README, committed on 5 October 2026.

@@ -1,0 +1,43 @@
+@startuml SD_07
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam ArrowColor #1F2933
+skinparam ParticipantBorderColor #1F2933
+skinparam ParticipantBackgroundColor #F3F5F7
+skinparam SequenceLifeLineBorderColor #8A929A
+skinparam SequenceGroupBackgroundColor #FFFFFF
+skinparam SequenceGroupBodyBackgroundColor transparent
+hide footbox
+
+title SD-07 View own reservations
+actor "Customer" as a
+participant "ui :\nQueryView" as v <<boundary>>
+participant "flow :\nQueryControl" as f <<control>>
+participant "user :\nTestIdentity" as u <<entity>>
+participant "records :\nReservationSet" as r <<entity>>
+autonumber
+a -> v: list / details
+v -> f: optional ref
+f -> u: checkRole
+u --> f: customer / denied
+break role denied
+f --> v: access error
+v --> a: show error
+end
+f -> r: findOwned
+r --> f: rows / reason
+alt own records exist
+f --> v: own saved data
+else own list empty
+f --> v: empty message
+else foreign, missing or read failure
+f --> v: refusal / error
+end
+v --> a: show result
+note over a,r
+Filter by current owner before returning lists or details. No foreign data is disclosed.
+Read-only. Pending records may offer UC-05; opening a list never cancels a reservation.
+end note
+@enduml

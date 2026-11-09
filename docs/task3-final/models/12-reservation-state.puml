@@ -1,0 +1,37 @@
+@startuml ST_01
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam stateBackgroundColor #F1F4EE
+skinparam stateBorderColor #263E35
+title ST-01 - Reservation lifecycle
+state "Pending collection" as Pending
+state "Completed" as Completed <<terminal>>
+state "Cancelled" as Cancelled <<terminal>>
+[*] --> Pending : create reservation\n[customer; listed title; positive integer q; enough stock]\n/ save owner, title, q and current unit price; stock -= q
+Pending --> Cancelled : cancel\n[owning customer]\n/ status = Cancelled; restore stored q once
+Pending --> Completed : confirm collection\n[staff checked reference, owner, title and quantity]\n/ status = Completed; stock unchanged
+Completed : cancel or confirm again / reject; no change
+Cancelled : cancel or confirm again / reject; no change
+note left of Pending
+Creation and cancellation save state and stock
+together or leave both unchanged.
+Failed creation leaves no reservation object.
+end note
+note right of Pending
+Unlisting prevents new reservations.
+Existing pending records can still be
+cancelled by their owner or collected by staff.
+end note
+note bottom of Completed
+Retained terminal record, not deletion.
+Saved quantity and unit price are unchanged.
+Eligible for completed totals only.
+end note
+note bottom of Cancelled
+Retained terminal record, not deletion.
+Unauthorised actions leave all data unchanged.
+No expiry, refund, extension or reversal.
+end note
+@enduml

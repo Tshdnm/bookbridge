@@ -4,16 +4,20 @@ A simple online book browsing and reservation system for a local bookstore.
 
 BookBridge is D2-Team7's local Software Engineering course prototype. This implementation follows the submitted Task2 user requirements: one store, sample records, predefined customer/staff identities, and in-store collection. It uses Flask and SQLite.
 
-## Current stage: 2-8 November 2026
+## Current stage: 9–15 November 2026
 
-Task1 and Task2 reports have been submitted. Task3 analysis models and this AI-assisted code draft are being prepared for team review. The stage covers requirements, ownership, models, code review and Feishu tracking; it does not claim final project acceptance.
+Task1 and Task2 were submitted previously. Task3's 35-page final analysis report has now been submitted to Moodle, as confirmed by the team leader on 9 November; the actual submission date is still to be supplied. The first presentation is scheduled for 12 November. Its 16-slide English deck and four Chinese scripts are ready for rehearsal.
 
 - [Requirements baseline](docs/requirements-baseline.md)
-- [This week's plan and functional ownership](docs/week-2026-11-02.md)
-- [Task3 model pack and traceability](docs/task3/README.md)
+- [This week's plan and functional ownership](docs/week-2026-11-09.md)
+- [Refined Task3 models used for the final report](docs/task3-final/README.md)
+- [First-presentation outline, scripts and speaking schedule](docs/presentation-1/README.md)
 - [Actual review evidence and remaining checks](docs/development-status.md)
+- [Previous 2–8 November plan](docs/week-2026-11-02.md)
 
-Task3 is due on **12 November 2026 at 23:59**. **5 December 2026** is the team's internal project readiness target; the official final-project date remains to be confirmed. Optional online hosting is a later experiment.
+This update adds analysis, presentation and progress materials. The application remains the initial local prototype; it does not claim a new feature implementation, completed group rehearsal or full manual acceptance. The report and presentation materials were prepared with AI assistance. Assigned ownership remains distinct from completed contribution.
+
+Task3's published deadline is **12 November 2026 at 23:59**. **5 December 2026** is the team's internal project readiness target; the official final-project date remains to be confirmed. Optional online hosting is a later experiment.
 
 ## Run locally
 

@@ -1,0 +1,26 @@
+digraph G {
+graph [layout=neato,overlap=true,splines=line,outputorder=edgesfirst,bgcolor="white",margin=0,pad=0.04];
+node [fontname="Arial",fontsize=11,pin=true,color="#263E35",height=0,width=0];
+edge [fontname="Arial",fontsize=11,color="#263E35",arrowsize=0.65];
+n1 [pos="3.4722222222222223,-0.1388888888888889!",label="ST-01  Reservation lifecycle",shape="plaintext",margin="0.02,0.02",fontsize="12"];
+n2 [pos="3.4722222222222223,-0.6944444444444444!",label="",shape="circle",margin="0.02,0.02",width=".16",height=".16",style="filled",fillcolor="#263E35",fixedsize="true"];
+n3 [pos="3.4722222222222223,-3.0833333333333335!",label="Pending collection",shape="box",margin="0.02,0.02",style="rounded,filled",fillcolor="#F1F4EE",width="2.3",height=".55"];
+n4 [pos="3.4722222222222223,-0.7916666666666666!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n5 [pos="3.4722222222222223,-2.7916666666666665!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n4 -> n5 [arrowhead="vee"];
+n6 [pos="3.4722222222222223,-1.7777777777777777!",label="create reservation\n[customer; listed title; positive integer q; enough stock]\n/ save owner, title, q and current price; deduct q",shape="box",margin="0.02,0.02",style="filled",fillcolor="white",color="white"];
+n7 [pos="1.7361111111111112,-5.486111111111111!",label="Cancelled\n<<terminal; retained>>\n______________________\ncancel or confirm again:\nreject; no change",shape="box",margin="0.02,0.02",style="rounded,filled",fillcolor="#F1F4EE",width="2.7",height="1.18"];
+n8 [pos="5.208333333333333,-5.486111111111111!",label="Completed\n<<terminal; retained>>\n______________________\ncancel or confirm again:\nreject; no change",shape="box",margin="0.02,0.02",style="rounded,filled",fillcolor="#F1F4EE",width="2.7",height="1.18"];
+n9 [pos="2.7777777777777777,-3.375!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n10 [pos="1.7361111111111112,-4.888888888888889!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n9 -> n10 [arrowhead="vee"];
+n11 [pos="4.166666666666667,-3.375!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n12 [pos="5.208333333333333,-4.888888888888889!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n11 -> n12 [arrowhead="vee"];
+n13 [pos="1.7361111111111112,-4.125!",label="cancel\n[owning customer]\n/ set Cancelled; restore stored q once",shape="box",margin="0.02,0.02",style="filled",fillcolor="white",color="white"];
+n14 [pos="5.208333333333333,-4.125!",label="confirm collection\n[staff checked details]\n/ set Completed; stock unchanged",shape="box",margin="0.02,0.02",style="filled",fillcolor="white",color="white"];
+n15 [pos="3.4722222222222223,-7.013888888888889!",label="Creation and cancellation save state and stock together,\nor leave both unchanged. Failed creation creates no record.\nUnlisting blocks new reservations but preserves eligible\nowner cancellation and staff confirmation of existing records.",shape="plaintext",margin="0.02,0.02"];
+n16 [pos="3.4722222222222223,-8.097222222222221!",label="Saved quantity and price remain unchanged.\nOnly Completed records enter completed totals.\nUnauthorised actions do not change data.\nNo expiry, refund, extension or reversal.",shape="plaintext",margin="0.02,0.02"];
+n17 [pos="0.0,0.0!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+n18 [pos="6.944444444444445,-8.680555555555555!",label="",shape="point",margin="0.02,0.02",width=".001",height=".001",style="invis"];
+}

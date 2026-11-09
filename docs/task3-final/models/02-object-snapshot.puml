@@ -1,0 +1,81 @@
+@startuml OD_01
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam objectBackgroundColor #F1F4EE
+skinparam objectBorderColor #263E35
+title OD-01 - Illustrative BookBridge object snapshot
+object "<u>customerA : TestIdentity</u>" as cA {
+  identityId = "C-A"
+  displayLabel = "Customer A"
+  role = "customer"
+}
+object "<u>customerB : TestIdentity</u>" as cB {
+  identityId = "C-B"
+  displayLabel = "Customer B"
+  role = "customer"
+}
+object "<u>staffA : TestIdentity</u>" as staffA {
+  identityId = "S-A"
+  displayLabel = "Staff A"
+  role = "staff"
+}
+object "<u>bookA : Book</u>" as bA {
+  bookId = "B-01"
+  title = "Harbour Stories"
+  author = "Sample Author A"
+  category = "Fiction"
+  currentUnitPrice = 50.00
+  availableQuantity = 3
+  listed = true
+}
+object "<u>bookB : Book</u>" as bB {
+  bookId = "B-02"
+  title = "City Walks"
+  author = "Sample Author B"
+  category = "Travel"
+  currentUnitPrice = 20.00
+  availableQuantity = 4
+  listed = false
+}
+object "<u>reservation1 : Reservation</u>" as r1 {
+  reference = "R-01"
+  quantity = 2
+  savedUnitPrice = 30.00
+  /amount = 60.00
+  status = "Pending collection"
+}
+object "<u>reservation2 : Reservation</u>" as r2 {
+  reference = "R-02"
+  quantity = 1
+  savedUnitPrice = 20.00
+  /amount = 20.00
+  status = "Completed"
+}
+object "<u>reservation3 : Reservation</u>" as r3 {
+  reference = "R-03"
+  quantity = 1
+  savedUnitPrice = 30.00
+  /amount = 30.00
+  status = "Cancelled"
+}
+r1 -- cA : owner
+r3 -- cA : owner
+r2 -- cB : owner
+r1 -- bA : reserved title
+r3 -- bA : reserved title
+r2 -- bB : reserved title
+note bottom of r1
+Example values, not production or test results.
+Each reservation has one owner and one title.
+/amount is derived: quantity x savedUnitPrice.
+Book A's current price differs from saved prices.
+end note
+note bottom of r2
+Completed totals for this snapshot:
+1 copy and 20.00 demo units.
+Book B remains linked after unlisting.
+Staff is a demo role, not a reservation owner.
+end note
+@enduml
